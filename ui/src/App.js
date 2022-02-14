@@ -23,7 +23,7 @@ function App() {
                 <AuthPage />
               </Route>
           )}
-          <Route path="/posts">
+          <Route path="/my-recipes">
             {authContext.loggedIn && <FoodPage />}
             {!authContext.loggedIn && <Redirect to="/auth" />}
           </Route>

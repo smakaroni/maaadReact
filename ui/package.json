@@ -14,7 +14,8 @@
     "web-vitals": "^2.1.4",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@mui/material": "^5.4.1"
+    "@mui/material": "^5.4.1",
+    "@mui/icons-material": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

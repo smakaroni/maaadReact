@@ -9,7 +9,7 @@ const Layout = (props) => {
         <Fragment>
             <NavigationBar/>
             <main>
-                <div className="container">{props.children}</div>
+                <div>{props.children}</div>
             </main>
         </Fragment>
     );

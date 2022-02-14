@@ -1,55 +1,99 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {Link, useHistory} from "react-router-dom";
 import AuthContext from "../../store/auth-context";
-import {Menu} from "@mui/material";
+import {
+    AppBar,
+    Box,
+    FormControlLabel,
+    FormGroup,
+    IconButton,
+    Menu,
+    MenuItem,
+    Switch,
+    Toolbar,
+    Typography
+} from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
+import {AccountCircle} from "@mui/icons-material";
 
 const NavigationBar = () => {
     const history = useHistory();
-
+    const [anchorEl, setAnchorEl] = useState(null);
     const authContext = useContext(AuthContext);
 
     const loggedIn = authContext.loggedIn;
 
     const logoutHandler = () => {
-      authContext.logout();
-      history.replace('/');
+        if (!loggedIn) {
+            history.replace("/auth");
+        } else {
+            authContext.logout();
+            history.replace('/');
+        }
+    };
+
+    const handleMenu = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = (event) => {
+      setAnchorEl(null);
     };
 
     return (
-        <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div className="d-flex flex-row">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/">Maaad</Link>
-                        </li>
+        <Box sx={{flexGrow: 1}}>
+            <FormGroup>
+                <FormControlLabel control={
+                        <Switch
+                            checked={loggedIn}
+                            onChange={logoutHandler}
+                            aria-label="login switch"
+                        />
+                    } label={loggedIn ? 'Logout' : 'Login'}
+                />
+            </FormGroup>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{mr: 2}}
+                        >
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        Maaad
+                    </Typography>
                         {loggedIn && (
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/posts">My posts</Link>
-                            </li>
+                            <div>
+                                <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleMenu} color="inherit" >
+                                    <AccountCircle/>
+                                </IconButton>
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: "top",
+                                        horizontal: "right",
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                    >
+                                    <MenuItem><Link underline="none" to="/my-recipes"> My Recipes</Link></MenuItem>
+                                    <MenuItem href="/my-recipes" to="/my-recipes" onClick={handleClose}>My Recipes</MenuItem>
+                                </Menu>
+                            </div>
                         )}
-                    </ul>
-                </div>
-                <div className="d-flex flex-row justify-content-end">
-                    <ul className="navbar-nav mr-auto">
-                        {!loggedIn && (
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/auth">Login</Link>
-                            </li>
-                        )}
-                        {loggedIn && (
-                            <li className="nav-item">
-                                <button className="btn btn-dark" onClick={logoutHandler}>LOGOUT</button>
-                            </li>
-                        )}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                </Toolbar>
+            </AppBar>
+        </Box>
+
     );
 }
 
