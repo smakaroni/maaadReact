@@ -14,6 +14,7 @@ type Recipe struct {
 	CreatedAt time.Time
 	ModifiedAt	time.Time
 	UserId 	int `json:"-"`
+	Ingredients []*Ingredients `json:"-, pg:fk:recipe_id, rel:has-many, on_delete:CASCADE"`
 }
 
 func AddRecipe(user *User, recipe *Recipe) error  {

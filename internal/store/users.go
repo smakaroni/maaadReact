@@ -12,12 +12,12 @@ import (
 type User struct {
 	Id int
 	Username string
-	Password string `pg:"-" binding: "required,min=7,max=32"`
+	Password string `pg:"-", binding:"required,min=7,max=32"`
 	HashedPassword	[]byte `json:"-"`
 	Salt	[]byte `json:"-"`
 	CreatedAt 	time.Time
 	ModifiedAt	time.Time
-	Recipes		[]*Recipe `json:"-" pg:"fk:user_id,rel:has-many,on_deleted:CASCADE"`
+	Recipes		[]*Recipe `json:"-", pg:"fk:user_id,rel:has-many,on_delete:CASCADE"`
 }
 
 var Users []*User

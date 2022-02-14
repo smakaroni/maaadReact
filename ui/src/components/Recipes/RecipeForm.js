@@ -97,7 +97,7 @@ const RecipeForm = (props) => {
                 </div>
                 <div className="form-group pb-3">
                     <label htmlFor="imgUrl">Image url</label>
-                    <textarea id="content" className="form-control" rows="5" required value={imgUrlValue} onChange={imgUrlChangeHandler}></textarea>
+                    <input id="imgUrl" className="form-control" value={imgUrlValue} onChange={imgUrlChangeHandler}></input>
                 </div>
                 <button type="submit" className="btn btn-success">{submitButtonText}</button>
             </form>
