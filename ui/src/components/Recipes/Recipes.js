@@ -3,6 +3,7 @@ import AuthContext from "../../store/auth-context";
 import Errors from "../Errors/Errors";
 import RecipeForm from "./RecipeForm";
 import RecipesLists from "./RecipesLists";
+import {Box, Container} from "@mui/material";
 
 
 
@@ -69,12 +70,12 @@ const Recipes = () => {
     const errorContent = Object.keys(errors).length === 0 ? null : Errors(errors);
 
     return (
-        <section>
-            <h1 className="pb-4 text-center">My posts</h1>
+        <Box  sx={{width: 1}}>
+            {/*<h1 className="pb-4 text-center">My posts</h1>*/}
             <RecipeForm onAddRecipe={addRecipeHandler}/>
             {errorContent}
             {recipeContent}
-        </section>
+        </Box>
     );
 };
 

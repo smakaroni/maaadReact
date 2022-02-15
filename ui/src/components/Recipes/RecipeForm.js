@@ -1,6 +1,7 @@
 import {useState, useContext, useEffect, useCallback} from "react";
 import AuthContext from "../../store/auth-context";
 import Errors from "../Errors/Errors";
+import {Box} from "@mui/material";
 
 const RecipeForm = (props) => {
   const authContext = useContext(AuthContext);
@@ -84,7 +85,7 @@ const RecipeForm = (props) => {
   const submitButtonText = props.onEditRecipe ? 'Update Recipe' : 'Add Recipe';
 
   return (
-      <section>
+      <Box sx={{width:1}}>
           <div className="container w-75 pb-4">
             <form onSubmit={submitHandler}>
                 <div className="form-group pb-3">
@@ -103,7 +104,7 @@ const RecipeForm = (props) => {
             </form>
               {errorContent}
           </div>
-      </section>
+      </Box>
   );
 }
 

@@ -3,13 +3,14 @@ import { Fragment } from 'react';
 import './Layout.css';
 
 import NavigationBar from './NavigationBar';
+import {Box} from "@mui/material";
 
 const Layout = (props) => {
     return (
         <Fragment>
             <NavigationBar/>
             <main>
-                <div>{props.children}</div>
+                <Box sx={{width:1}}>{props.children}</Box>
             </main>
         </Fragment>
     );

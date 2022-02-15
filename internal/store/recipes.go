@@ -7,17 +7,17 @@ import (
 )
 
 type Recipe struct {
-	Id 		int
-	Title	string
-	Content string
-	ImgUrl 	string
-	CreatedAt time.Time
-	ModifiedAt	time.Time
-	UserId 	int `json:"-"`
+	Id          int
+	Title       string
+	Content     string
+	ImgUrl      string
+	CreatedAt   time.Time
+	ModifiedAt  time.Time
+	UserId      int            `json:"-"`
 	Ingredients []*Ingredients `json:"-, pg:fk:recipe_id, rel:has-many, on_delete:CASCADE"`
 }
 
-func AddRecipe(user *User, recipe *Recipe) error  {
+func AddRecipe(user *User, recipe *Recipe) error {
 	recipe.UserId = user.Id
 	_, err := db.Model(recipe).Returning("*").Insert()
 	if err != nil {
@@ -27,7 +27,7 @@ func AddRecipe(user *User, recipe *Recipe) error  {
 }
 
 func FetchUserRecipes(user *User) error {
-	err := db.Model(user).Relation("Recipes", func(q *orm.Query) (*orm.Query, error) {
+	err := db.Model(user).WherePK().Relation("Recipes", func(q *orm.Query) (*orm.Query, error) {
 		return q.Order("id ASC"), nil
 	}).Select()
 	if err != nil {

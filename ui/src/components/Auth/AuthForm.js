@@ -55,7 +55,7 @@ const AuthForm = () => {
                 }
             } else {
                 authContext.login(data.jwt);
-                history.replace('/');
+                history.replace('/my-recipes');
             }
         } catch (error) {
             setErrors({"error": error.message});
