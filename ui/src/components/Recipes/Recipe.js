@@ -85,6 +85,7 @@ const Recipe = (props) => {
   const cardTitle = editing ? 'Edit recipe' : props.recipe.Title;
   const cardDate = props.recipe.CreatedAt;
   const cardImg = props.recipe.ImgUrl;
+  const cardIngredients = props.recipe.ingredients;
   const cardBody = editing ? <RecipeForm recipe={props.recipe} onEditRecipe={editRecipeHandler} editing={true}/> : props.recipe.Content;
   const switchModeButtonText = editing ? 'Cancel' : 'Edit';
   const cardButtons = editing ?
@@ -112,8 +113,14 @@ const Recipe = (props) => {
                       <MoreVertIcon />
                   </IconButton>
               }
-              title={cardTitle}
-              subheader={cardDate}
+              title={
+                  <Typography variant="h6">
+                      {cardTitle}
+                  </Typography>
+              }
+              subheader={
+                  cardDate
+              }
               />
           <CardMedia
               component="img"
@@ -122,8 +129,14 @@ const Recipe = (props) => {
               alt="Bla Bla"
               />
           <CardContent>
+              <Typography variant="h6">
+                  Ingredients
+              </Typography>
               <Typography variant="body2" color="text.secondary">
-                  Just a short description of the recipe.
+                  {cardIngredients ? cardIngredients.map((ingredient) => (
+                      <p key={ingredient.Id}>{ingredient.Name} {ingredient.Amount} {ingredient.Unit}</p>
+                  )) : "hej hej"}
+
               </Typography>
           </CardContent>
           <CardActions disableSpacing>
@@ -143,19 +156,13 @@ const Recipe = (props) => {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
-                  <Typography paragraph>Instructions</Typography>
+                  <Typography variant="h6">Instructions</Typography>
                   <Typography paragraph>
                       {cardBody}
                   </Typography>
               </CardContent>
           </Collapse>
       </Card>
-      // <div className="card mb-5 pb-2">
-      //     <div className="card-header">{cardTitle}</div>
-      //     <div className="card-body">{cardBody}</div>
-      //     {cardButtons}
-      //     {errorContent}
-      // </div>
   );
 };
 

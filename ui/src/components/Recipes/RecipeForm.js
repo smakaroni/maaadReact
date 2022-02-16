@@ -1,7 +1,7 @@
 import {useState, useContext, useEffect, useCallback} from "react";
 import AuthContext from "../../store/auth-context";
 import Errors from "../Errors/Errors";
-import {Box} from "@mui/material";
+import {Box, Button, Grid, TextareaAutosize, TextField} from "@mui/material";
 
 const RecipeForm = (props) => {
   const authContext = useContext(AuthContext);
@@ -9,12 +9,14 @@ const RecipeForm = (props) => {
   const [contentValue, setContentValue] = useState('');
   const [imgUrlValue, setImgUrlValue] = useState('');
   const [errors, setErrors] = useState({});
+  const [ingredientsValue, setIngredientsValue] =useState([]);
 
   const populateField = useCallback(() => {
       if (props.recipe) {
           setTitleValue(props.recipe.Title);
           setContentValue(props.recipe.Content);
-          setImgUrlValue(props.recipe.ImgUrl)
+          setImgUrlValue(props.recipe.ImgUrl);
+          setIngredientsValue(props.recipe.Ingredients);
       }
   }, [props.recipe]);
 
@@ -32,6 +34,7 @@ const RecipeForm = (props) => {
               Title: titleValue,
               Content: contentValue,
               ImgUrl: imgUrlValue,
+              ingredients: ingredientsValue,
           }
           if (props.onEditRecipe) {
               body.Id = props.recipe.Id;
@@ -59,6 +62,7 @@ const RecipeForm = (props) => {
           } else {
               setTitleValue('');
               setContentValue('');
+              setImgUrlValue('')
               if (props.onAddRecipe) {
                   props.onAddRecipe(data.data);
               }
@@ -85,26 +89,66 @@ const RecipeForm = (props) => {
   const submitButtonText = props.onEditRecipe ? 'Update Recipe' : 'Add Recipe';
 
   return (
-      <Box sx={{width:1}}>
-          <div className="container w-75 pb-4">
-            <form onSubmit={submitHandler}>
-                <div className="form-group pb-3">
-                    <label htmlFor="title">Title</label>
-                    <input id="title" type="text" className="form-control" required value={titleValue} onChange={titleChangeHandler}/>
-                </div>
-                <div className="form-group pb-3">
-                    <label htmlFor="content">Content</label>
-                    <textarea id="content" className="form-control" rows="5" required value={contentValue} onChange={contentChangedHandler}></textarea>
-                </div>
-                <div className="form-group pb-3">
-                    <label htmlFor="imgUrl">Image url</label>
-                    <input id="imgUrl" className="form-control" value={imgUrlValue} onChange={imgUrlChangeHandler}></input>
-                </div>
-                <button type="submit" className="btn btn-success">{submitButtonText}</button>
-            </form>
-              {errorContent}
-          </div>
-      </Box>
+      <Grid container sx={{width:1}}>
+          <Grid item xs={4} md={4} xl={4}></Grid>
+          <Grid item xs={4} md={4} xl={4}>
+          <Box component="form" onSubmit={submitHandler}>
+              <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="title"
+                  label="Title"
+                  name="title"
+                  autoFocus
+                  onChange={titleChangeHandler}/>
+              <TextareaAutosize
+                  margin="normal"
+                  minRows={3}
+                  placeholder="Instructions *"
+                  style={{width:"100%"}}
+                  id="content"
+                  label="Instructions"
+                  name="content"
+                  onChange={contentChangedHandler}/>
+              <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="imgUrl"
+                  label="Image url"
+                  name="imgUrl"
+                  onChange={imgUrlChangeHandler}/>
+              <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{mt: 3, mb: 2}}>
+                  {submitButtonText}
+              </Button>
+          </Box>
+          </Grid>
+          <Grid item xs={4} md={4} xl={4}></Grid>
+          {errorContent}
+          {/*<div className="container w-75 pb-4">*/}
+          {/*  <form onSubmit={submitHandler}>*/}
+          {/*      <div className="form-group pb-3">*/}
+          {/*          <label htmlFor="title">Title</label>*/}
+          {/*          <input id="title" type="text" className="form-control" required value={titleValue} onChange={titleChangeHandler}/>*/}
+          {/*      </div>*/}
+          {/*      <div className="form-group pb-3">*/}
+          {/*          <label htmlFor="content">Content</label>*/}
+          {/*          <textarea id="content" className="form-control" rows="5" required value={contentValue} onChange={contentChangedHandler}></textarea>*/}
+          {/*      </div>*/}
+          {/*      <div className="form-group pb-3">*/}
+          {/*          <label htmlFor="imgUrl">Image url</label>*/}
+          {/*          <input id="imgUrl" className="form-control" value={imgUrlValue} onChange={imgUrlChangeHandler}></input>*/}
+          {/*      </div>*/}
+          {/*      <button type="submit" className="btn btn-success">{submitButtonText}</button>*/}
+          {/*  </form>*/}
+          {/*    {errorContent}*/}
+          {/*</div>*/}
+      </Grid>
   );
 }
 

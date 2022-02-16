@@ -14,7 +14,7 @@ type Recipe struct {
 	CreatedAt   time.Time
 	ModifiedAt  time.Time
 	UserId      int            `json:"-"`
-	Ingredients []*Ingredients `json:"-, pg:fk:recipe_id, rel:has-many, on_delete:CASCADE"`
+	Ingredients []*Ingredients `json:"ingredients" pg:"fk:recipe_id, rel:has-many, on_delete:CASCADE"`
 }
 
 func AddRecipe(user *User, recipe *Recipe) error {
@@ -33,6 +33,9 @@ func FetchUserRecipes(user *User) error {
 	if err != nil {
 		log.Error().Err(err).Msg("Error fetching users recipes")
 	}
+	for _, recipe := range user.Recipes {
+		FetchRecipeIngredients(recipe)
+	}
 	return err
 }
 
@@ -42,6 +45,11 @@ func FetchRecipe(id int) (*Recipe, error) {
 	err := db.Model(recipe).WherePK().Select()
 	if err != nil {
 		log.Error().Err(err).Msg("Error fetching recipe")
+		return nil, err
+	}
+	err = FetchRecipeIngredients(recipe)
+	if err != nil {
+		log.Error().Err(err).Msg("Error fetching ingredients")
 		return nil, err
 	}
 	return recipe, nil

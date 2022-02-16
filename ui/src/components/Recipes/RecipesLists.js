@@ -2,6 +2,7 @@ import Recipe from "./Recipe";
 import {Box, Grid} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {Paper} from "@mui/material";
+
 const RecipesLists = (props) => {
 
     const Item = styled(Paper)(({ theme }) => ({
