@@ -5,25 +5,25 @@ import (
 )
 
 const (
-	hostKey = "RECIPE_HOST"
-	portKey = "RECIPE_PORT"
-	dbHostKey = "RECIPE_DB_HOST"
-	dbPortKey = "RECIPE_DB_PORT"
-	dbNameKey = "RECIPE_DB_NAME"
-	dbUserKey = "RECIPE_DB_USER"
+	hostKey       = "RECIPE_HOST"
+	portKey       = "RECIPE_PORT"
+	dbHostKey     = "RECIPE_DB_HOST"
+	dbPortKey     = "RECIPE_DB_PORT"
+	dbNameKey     = "RECIPE_DB_NAME"
+	dbUserKey     = "RECIPE_DB_USER"
 	dbPasswordKey = "RECIPE_DB_PASSWORD"
-	jwtSecretKey = "RECIPE_JWT_SECRET"
+	jwtSecretKey  = "RECIPE_JWT_SECRET"
 )
 
 type Config struct {
-	Host	string
-	Port 	string
-	DbHost	string
-	DbPort	string
-	DbName	string
-	DbUser	string
+	Host       string
+	Port       string
+	DbHost     string
+	DbPort     string
+	DbName     string
+	DbUser     string
 	DbPassword string
-	JwtSecret	string
+	JwtSecret  string
 }
 
 func NewConfig() Config {
@@ -71,16 +71,15 @@ func NewConfig() Config {
 	//	logAndPanic(jwtSecretKey)
 	//}
 
-
 	return Config{
 		Host:       "0.0.0.0",
 		Port:       "8080",
-		DbHost:     "localhost",
+		DbHost:     "maadreact-db-1",
 		DbPort:     "5432",
-		DbName:     "recipes",
-		DbUser:     "jokke",
-		DbPassword: "testtest",
-		JwtSecret: "jwtSecret123",
+		DbName:     "postgres",
+		DbUser:     "postgres",
+		DbPassword: "postgres",
+		JwtSecret:  "jwtSecret123",
 	}
 }
 

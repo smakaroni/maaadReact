@@ -15,11 +15,13 @@ func SetDBConnection(dbOpts *pg.Options) {
 	if dbOpts == nil {
 		log.Panicln("DB option cannot be nil")
 	} else {
+		log2.Info().Str("ej hej", dbOpts.Addr).Msg("hej hej hej")
+		fmt.Println(dbOpts.Addr)
 		db = pg.Connect(dbOpts)
 	}
 }
 
-func GetDBConnection() *pg.DB {return db}
+func GetDBConnection() *pg.DB { return db }
 
 func ResetTestDB() {
 	SetDBConnection(database.NewDBOptions(conf.NewTestConfig()))

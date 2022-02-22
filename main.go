@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	//gin.SetMode(gin.ReleaseMode)
 	cli.Parse()
 	server.Start(conf.NewConfig())
 }

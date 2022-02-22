@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/smakaroni/maaad-react/internal/store"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 func setRouter() *gin.Engine {
 	router := gin.Default()
+	router.Use(static.Serve("/", static.LocalFile("./ui", true)))
 
 	router.RedirectTrailingSlash = true
 
