@@ -85,8 +85,8 @@ const NavigationBar = () => {
                                     open={Boolean(anchorEl)}
                                     onClose={handleClose}
                                     >
-                                    <MenuItem><Link underline="none" to="/my-recipes"> My Recipes</Link></MenuItem>
-                                    <MenuItem href="/my-recipes" to="/my-recipes" onClick={handleClose}>My Recipes</MenuItem>
+                                    <MenuItem><Link underline="none" to="/my-recipes" onClick={handleClose}> My Recipes</Link></MenuItem>
+                                    {/*<MenuItem href="/my-recipes" to="/my-recipes" onClick={handleClose}>My Recipes</MenuItem>*/}
                                 </Menu>
                             </div>
                         )}

@@ -3,7 +3,8 @@ import AuthContext from "../../store/auth-context";
 import Errors from "../Errors/Errors";
 import RecipeForm from "./RecipeForm";
 import RecipesLists from "./RecipesLists";
-import {Box, Container} from "@mui/material";
+import {Box, Container, Fab, Typography} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 
 
@@ -11,6 +12,7 @@ const Recipes = () => {
     const authContext = useContext(AuthContext);
     const [recipes, setRecipes] = useState([]);
     const [errors, setErrors] = useState({});
+    const [adding, setAdding] = useState(false);
 
     const fetchRecipesHandler = useCallback(async () => {
         setErrors({});
@@ -58,6 +60,9 @@ const Recipes = () => {
     const editRecipeHandler = () => {
         fetchRecipesHandler();
     }
+    const addHandler = () => {
+        setAdding((prevState) => !prevState);
+    }
 
     const recipeContent = recipes.length === 0 ?
         <p>No posts yet</p>
@@ -71,10 +76,16 @@ const Recipes = () => {
 
     return (
         <Box  sx={{width: 1}}>
-            {/*<h1 className="pb-4 text-center">My posts</h1>*/}
-            <RecipeForm onAddRecipe={addRecipeHandler}/>
+            <Typography variant="h4" textAlign="center">My Recipes</Typography>
+            {adding ? <RecipeForm onAddRecipe={addRecipeHandler}/> : ''}
+
             {errorContent}
             {recipeContent}
+            <Box sx={{'& > :not(style)': {m:1}}}>
+                <Fab color="primary" aria-label="add" style={{position: 'fixed', bottom: 10, right: 16}}>
+                    <AddIcon onClick={addHandler} />
+                </Fab>
+            </Box>
         </Box>
     );
 };

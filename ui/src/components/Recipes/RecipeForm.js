@@ -113,7 +113,6 @@ const RecipeForm = (props) => {
                   onChange={contentChangedHandler}/>
               <TextField
                   margin="normal"
-                  required
                   fullWidth
                   id="imgUrl"
                   label="Image url"

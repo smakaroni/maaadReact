@@ -10,7 +10,7 @@ import {
     CardHeader,
     CardMedia,
     Collapse,
-    IconButton,
+    IconButton, Menu, MenuItem,
     Typography
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -24,6 +24,7 @@ import {styled} from '@mui/material/styles'
 const Recipe = (props) => {
   const [editing, setEditing] = useState(false);
   const [errors, setErrors] = useState({});
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const authContext = useContext(AuthContext);
 
@@ -38,6 +39,12 @@ const Recipe = (props) => {
         }),
     }));
 
+    const handleSettingsMenu = (event) => {
+      setAnchorEl(event.currentTarget);
+    }
+    const handleClose = (event) => {
+      setAnchorEl(null);
+    }
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
@@ -71,6 +78,7 @@ const Recipe = (props) => {
               }
           } else {
               props.onDeleteRecipe(props.recipe.Id);
+              handleClose();
           }
       } catch (error) {
           setErrors({'error': error.message});
@@ -109,9 +117,29 @@ const Recipe = (props) => {
                   </Avatar>
               }
               action={
-                  <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                  </IconButton>
+                  <div>
+                      <IconButton aria-label="settings" aria-controls="settings-menu" aria-haspopup="true" onClick={handleSettingsMenu}>
+                        <MoreVertIcon />
+                      </IconButton>
+                      <Menu
+                          id="settings-menu"
+                          anchorEl={anchorEl}
+                          anchorOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                          }}
+                          open={Boolean(anchorEl)}
+                          onClose={handleClose}
+                          >
+                          <MenuItem onClick={deleteHandler}>Delete</MenuItem>
+                          <MenuItem onClick={handleClose}>Edit</MenuItem>
+                      </Menu>
+                  </div>
               }
               title={
                   <Typography variant="h6">
@@ -125,7 +153,7 @@ const Recipe = (props) => {
           <CardMedia
               component="img"
               height="194"
-              image={cardImg}
+              image={cardImg ? cardImg : 'https://via.placeholder.com/500'}
               alt="Bla Bla"
               />
           <CardContent>
